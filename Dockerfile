@@ -5,13 +5,12 @@ ARG TARGETARCH
 ENV ARCH_FILENAME=""
 ENV USER=container HOME=/home/container
 
-# Create user and working dir
+# Create user and install dependencies
 RUN apt-get update && \
     apt-get install -y wget unzip curl ca-certificates && \
-    useradd -m -d /home/container -s /bin/bash container && \
-    mkdir -p /home/container/ZenithProxy
+    useradd -m -d /home/container -s /bin/bash container
 
-# Set the architecture-specific filename
+# Set the architecture-specific filename and download directly into /home/container
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         ARCH_FILENAME="amd64"; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
@@ -19,7 +18,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     else \
         echo "Unsupported architecture: $TARGETARCH" && exit 1; \
     fi && \
-    cd /home/container/ZenithProxy && \
+    cd /home/container && \
     wget https://github.com/rfresh2/ZenithProxy/releases/download/launcher-v3/ZenithProxy-launcher-linux-${ARCH_FILENAME}.zip && \
     unzip ZenithProxy-launcher-linux-${ARCH_FILENAME}.zip && \
     rm ZenithProxy-launcher-linux-${ARCH_FILENAME}.zip
