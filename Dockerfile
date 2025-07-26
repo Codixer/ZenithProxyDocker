@@ -1,5 +1,5 @@
 # Use Ubuntu Noble and allow multi-platform builds
-FROM --platform=$TARGETPLATFORM ubuntu:noble
+FROM ubuntu:noble
 
 ARG TARGETARCH
 ENV ARCH_FILENAME=""
