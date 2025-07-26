@@ -6,8 +6,9 @@ ENV ARCH_FILENAME=""
 ENV USER=container HOME=/home/container
 
 # Create user and working dir
-RUN apt-get update && apt-get install -y wget unzip curl ca-certificates && \
-    adduser --disabled-password --home /home/container container && \
+RUN apt-get update && \
+    apt-get install -y wget unzip curl ca-certificates && \
+    useradd -m -d /home/container -s /bin/bash container && \
     mkdir -p /home/container/ZenithProxy
 
 # Set the architecture-specific filename
